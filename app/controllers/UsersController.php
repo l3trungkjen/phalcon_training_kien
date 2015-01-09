@@ -44,8 +44,10 @@ class UsersController extends \Phalcon\Mvc\Controller
                 $users->id       = $request['id'];
                 $users->username = $request['username'];
                 $users->password = $request['password'];
+                $users->flag = false;
                 $result = $users->save();
             } else {
+                $users->flag = true;
                 $result = $users->save($request, array('username', 'password'));
             }
             if ($result) {
@@ -85,12 +87,20 @@ class UsersController extends \Phalcon\Mvc\Controller
                 $this->flash->error($value);
             }
         } else {
+            $this->username = $user->username;
             $this->flash->success('User was deleted success.');
         }
         return $this->dispatcher->forward(array(
             'controller' => 'users',
             'action'     => 'index'
         ));
+    }
+
+    public function last_registerAction()
+    {
+        $redis = new Redis();
+        $redis->connect('127.0.0.1', 6379);
+        $this->view->users = Users::query()->inWhere('id', !empty($redis->lRange('users', 0, 9)) ? $redis->lRange('users', 0, 9) : array(0))->execute();
     }
 }
 

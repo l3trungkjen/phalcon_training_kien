@@ -1,3 +1,3 @@
-<h1>Congratulations!</h1>
-
-<p>You're now flying with Phalcon. Great things are about to happen!</p>
+{{ link_to('../users', 'Users Test') }}
+ | 
+{{ link_to('../users/last_register', 'Last Register Users') }}

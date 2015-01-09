@@ -1,8 +1,8 @@
-{{ form("users/save") }}
+{{ form("../users/save") }}
 <table width="100%">
     <tr>
         <td align="left">
-            {{ link_to("users", "Go Back") }}
+            {{ link_to("../users", "Go Back") }}
         </td>
     </tr>
 </table>
